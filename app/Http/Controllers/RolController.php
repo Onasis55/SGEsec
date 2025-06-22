@@ -14,5 +14,12 @@ class RolController extends Grid
 
     protected string $page = 'Rol';
 
+    protected function defineRules(): array
+    {
+        return [
+           'nombre_rol' => 'required|min:3'
+        ];
+    }
+
     protected string $resource  = 'roles';
 }
