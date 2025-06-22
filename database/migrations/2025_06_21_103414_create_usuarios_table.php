@@ -22,13 +22,12 @@ return new class extends Migration
                 ->nullable();
             $table->boolean('activo')
                 ->default(true);
-            $table->unsignedBigInteger('id_rol');
+            $table->unsignedBigInteger('rol_id');
             $table->timestamps();
 
-            $table->foreign('id_rol')
-                ->references('id_rol')
-                ->on('rols')
-                ->onDelete('cascade');
+            $table->foreign('rol_id')
+                ->references('id')
+                ->on('rols');
         });
     }
 
