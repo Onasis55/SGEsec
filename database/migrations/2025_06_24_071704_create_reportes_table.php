@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('calificacions', function (Blueprint $table) {
+        Schema::create('reportes', function (Blueprint $table) {
             $table->id();
-            $table->float('valor', precision: 1);
+            $table->enum('tipo',['inasistencia','conducta','seleccionar'])->default('seleccionar');
+            $table->unsignedBigInteger('id_sanciones');
             $table->unsignedBigInteger('id_estudiante');
-            $table->unsignedBigInteger('id_unidad');
             $table->timestamps();
 
             $table->foreign('id_estudiante')->references('id')->on('estudiantes');
-            //$table->foreign('id_unidad')->references('id')->on('unidads');
+            $table->foreign('id_sanciones')->references('id')->on('sanciones');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('calificacions');
+        Schema::dropIfExists('reportes');
     }
 };

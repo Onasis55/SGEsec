@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ciclo_escolars', function (Blueprint $table) {
-            $table->string('periodo')->primary();
-            $table->string('ciclo');
-            $table->date('fecha_ini');
-            $table->date('fecha_fin');
-            $table->boolean('activo')->default(false);
+        Schema::create('horarios', function (Blueprint $table) {
+            $table->id();
+            $table->string('hora_inicio');
+            $table->string('hora_fin');
+            $table->unsignedBigInteger('unidad_id');
             $table->timestamps();
+
+            //$table->foreign('unidad_id')->references('id')->on('unidads');
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ciclo_escolars');
+        Schema::dropIfExists('horarios');
     }
 };
