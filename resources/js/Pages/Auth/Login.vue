@@ -36,14 +36,16 @@ const submit = () => {
         <template #logo>
             <AuthenticationCardLogo/>
         </template>
-
+        <div class="block font-extrabold text-center text-gray-100 text-4xl">
+            Iniciar sesión
+        </div>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="cuenta" value="Cuenta" />
+        <form @submit.prevent="submit" >
+            <div class="mt-3">
+                <InputLabel for="cuenta" value="Usuario" />
                 <TextInput
                     id="cuenta"
                     v-model="form.cuenta"
@@ -56,8 +58,8 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.cuenta" />
             </div>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+            <div class="mt-10">
+                <InputLabel for="password" value="Contraseña" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -72,17 +74,17 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                    <span class="ms-2 text-sm text-gray-300">Recuerdame</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Forgot your password?
+                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-400 hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#79BA7B]">
+                    Olvidaste tu contraseña?
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
+                    Ingresar
                 </PrimaryButton>
             </div>
         </form>
