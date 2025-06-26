@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MateriasController;
 use App\Http\Controllers\RolController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::resource('roles', RolController::class);
+    Route::resource('materias', MateriasController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');

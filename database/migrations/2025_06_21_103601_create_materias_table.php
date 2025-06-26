@@ -15,12 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->integer('nivel');
-            $table->unsignedBigInteger('unidad_id');
-            $table->unsignedBigInteger('usuario_id');
             $table->timestamps();
 
             //$table->foreign('unidad_id')->references('id')->on('unidads');
-            $table->foreign('usuario_id')->references('id')->on('users');
+            //$table->foreign('usuario_id')->references('id')->on('users');
         });
     }
 
