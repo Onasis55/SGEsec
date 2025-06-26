@@ -64,4 +64,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //Relacion con el modelo de rol
+    public function rol(){
+        return $this->belongsTo(Rol::class);
+    }
 }

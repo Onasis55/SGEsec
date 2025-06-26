@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MateriasController;
 use App\Http\Controllers\RolController;
+use App\Http\Middleware\AutenticacionRoles;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,8 +24,14 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::resource('roles', RolController::class);
+
+    Route::middleware('')
+        ->prefix('estudiante/')
+        ->group(function (){
+
+        });
     Route::resource('materias', MateriasController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
-    })->name('dashboard');
+    })->name('dashboard')->middleware(AutenticacionRoles::class);
 });

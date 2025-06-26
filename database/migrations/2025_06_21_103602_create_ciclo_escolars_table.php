@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ciclo_escolars', function (Blueprint $table) {
             $table->id();
-            $table->string('ciclo');
+            //$table->string('ciclo');
             $table->date('fecha_ini');
             $table->date('fecha_fin');
             $table->unsignedBigInteger('materia_id');

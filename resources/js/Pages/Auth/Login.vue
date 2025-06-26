@@ -32,6 +32,9 @@ const submit = () => {
 <template>
     <Head title="Log in" />
 
+    <div class="bg-black">
+
+    </div>
     <AuthenticationCard>
         <template #logo>
             <AuthenticationCardLogo/>
