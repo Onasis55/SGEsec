@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ciclo_escolars', function (Blueprint $table) {
+        Schema::create('ciclosescolares_materias', function (Blueprint $table) {
             $table->id();
-            //$table->string('ciclo');
-            $table->date('fecha_ini');
-            $table->date('fecha_fin');
             $table->unsignedBigInteger('materia_id');
+            $table->unsignedBigInteger('ciclosescolares_id');
+            $table->foreign('materia_id')->references('id')->on('materias');
+            $table->foreign('ciclosescolares_id')->references('id')->on('ciclo_escolars');
             $table->timestamps();
-
-            //$table->foreign('materia_id')->references('id')->on('materias');
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ciclo_escolars');
+        Schema::dropIfExists('ciclosescolares_materias');
     }
 };
