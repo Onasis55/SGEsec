@@ -24,6 +24,7 @@ Route::middleware([
 ])->group(function () {
     Route::resource('roles', RolController::class);
     Route::resource('materias', MateriasController::class);
+    Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
