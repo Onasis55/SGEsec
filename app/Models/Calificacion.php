@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Horario extends Model
+class Calificacion extends Model
 {
     protected $fillable = [
-        'hora_inicio',
-        'hora_fin'
+        'valor'
     ];
 }
