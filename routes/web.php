@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\CalificacionController;
+use App\Http\Controllers\CicloEscolarController;
+use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\SancionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AutenticacionRoles;
@@ -40,13 +45,13 @@ Route::middleware([
 
         });
     Route::resource('materias', MateriaController::class);
-    Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
-    Route::resource('materias', MateriasController::class);
-    //Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
+    Route::resource('ciclosescolares', CicloEscolarController::class);
+    Route::resource('materias', MateriaController::class);
+    Route::resource('ciclosescolares', CicloEscolarController::class);
     Route::resource('horarios', HorarioController::class);
-    Route::resource('calificaciones',\App\Http\Controllers\CalificacionController::class);
-    Route::resource('reportes',\App\Http\Controllers\ReporteController::class);
-    Route::resource('sanciones',\App\Http\Controllers\SancionController::class);
+    Route::resource('calificaciones', CalificacionController::class);
+    Route::resource('reportes', ReporteController::class);
+    Route::resource('sanciones', SancionController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard')->middleware(AutenticacionRoles::class);

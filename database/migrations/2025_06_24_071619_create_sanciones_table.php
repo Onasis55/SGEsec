@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('sanciones', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
+            $table->text('descripcion')->nullable();
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
             $table->timestamps();
         });
     }

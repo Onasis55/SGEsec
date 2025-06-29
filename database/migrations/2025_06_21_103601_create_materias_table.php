@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('materias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
+            $table->string('nombre');
+            $table->string('clave')->unique();
+            $table->text('descripcion')->nullable();
             $table->integer('nivel');
+            $table->unsignedBigInteger('ciclo_escolar_id');
+            $table->foreign('ciclo_escolar_id')->references('id')->on('ciclo_escolars');
             $table->timestamps();
-
-            //$table->foreign('unidad_id')->references('id')->on('unidads');
-            //$table->foreign('usuario_id')->references('id')->on('users');
         });
     }
 

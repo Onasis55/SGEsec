@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('horarios', function (Blueprint $table) {
+        Schema::create('unidads', function (Blueprint $table) {
             $table->id();
-            $table->time('hora_ini');
-            $table->time('hora_fin');
+            $table->string('nombre');
+            $table->text('descripcion')->nullable();
             $table->foreignId('materia_id')->constrained('materias');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('horarios');
+        Schema::dropIfExists('unidads');
     }
 };

@@ -13,13 +13,10 @@ return new class extends Migration
     {
         Schema::create('reportes', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo',['inasistencia','conducta','seleccionar'])->default('seleccionar');
-            $table->unsignedBigInteger('id_sanciones');
-            $table->unsignedBigInteger('id_estudiante');
+            $table->string('tipo');
+            $table->text('descripcion')->nullable();
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
             $table->timestamps();
-
-            $table->foreign('id_estudiante')->references('id')->on('estudiantes');
-            $table->foreign('id_sanciones')->references('id')->on('sanciones');
         });
     }
 
