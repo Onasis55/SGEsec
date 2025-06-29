@@ -13,7 +13,7 @@ class CicloEscolarController extends Grid
 
     protected string $title = 'CiclosEscolares';
 
-    protected string $page = 'CiclosEscolares';
+    protected string $page = 'VistaReportes';
 
     protected string $resource = 'ciclosescolares';
 
