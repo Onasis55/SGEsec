@@ -7,16 +7,16 @@ import FormLayout from "@/Layouts/FormLayout.vue";
     <form-layout>
         <div class="grid grid-cols-4 form">
             <div class="">
-                <label for="hora_inicio">
+                <label for="hora_ini">
                     Hora de inicio
                 </label>
-                <input type="text" id="hora_inicio" name="hora_inicio">
+                <input type="time" id="hora_ini" name="hora_ini">
             </div>
             <div class="">
                 <label for="hora_fin">
                     Hora de fin
                 </label>
-                <input type="text" id="hora_fin" name="hora_fin">
+                <input type="time" id="hora_fin" name="hora_fin">
             </div>
 
         </div>

@@ -17,14 +17,7 @@ class SancionController extends Grid
 
     protected string $resource  = 'sanciones';
 
-    public function create(): \Inertia\Response
-    {
-        return Inertia::render($this->page,[
-            'url' => route($this->resource.'.store'),
-            'method' => 'post',
-            'backurl' => route($this->resource.'.index'),
-        ]);
-    }
+
     protected function defineRules(): array
     {
         return [

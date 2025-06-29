@@ -28,7 +28,7 @@ class HorarioController extends Grid
     protected function defineRules(): array
     {
         return [
-            'hora_inicio' => 'required|string',
+            'hora_ini' => 'required|string',
             'hora_fin' => 'required|string'
         ];
     }
