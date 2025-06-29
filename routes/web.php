@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MateriasController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\AutenticacionRoles;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::resource('roles', RolController::class);
+    Route::resource('users', UserController::class);
+
+    Route::post('users/store-profesor', [UserController::class, 'storeProfesor'])->name('users.storeProfesor');
+    Route::post('users/store-estudiante', [UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
 
     Route::middleware('')
         ->prefix('estudiante/')

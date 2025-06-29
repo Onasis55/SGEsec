@@ -17,19 +17,22 @@ class MateriasController extends Grid
 
     protected string $resource  = 'materias';
 
-    public function create(): \Inertia\Response
-    {
-        return Inertia::render($this->page,[
-            'url' => route($this->resource.'.store'),
-            'method' => 'post',
-            'backurl' => route($this->resource.'.index'),
-        ]);
-    }
+
     protected function defineRules(): array
     {
         return [
             'nombre' => 'required|string',
             'nivel' => 'required|integer|between:1,3'
         ];
+    }
+
+    protected function defaultActions()
+    {
+        // TODO: Implement defaultActions() method.
+    }
+
+    protected function setupActions()
+    {
+        // TODO: Implement setupActions() method.
     }
 }

@@ -34,16 +34,44 @@ class GridRowCollection implements Arrayable
 
         $builder = $model->newQuery();
 
+        // Aplicar joins si existen
+        $joins = $this->_grid->getJoins();
+        foreach ($joins as $join) {
+            switch ($join['type']) {
+                case 'left':
+                    $builder->leftJoin($join['table'], $join['first'], $join['operator'], $join['second']);
+                    break;
+                case 'right':
+                    $builder->rightJoin($join['table'], $join['first'], $join['operator'], $join['second']);
+                    break;
+                case 'inner':
+                default:
+                    $builder->join($join['table'], $join['first'], $join['operator'], $join['second']);
+                    break;
+            }
+        }
 
-        // aplicamos los creterios de busqueda
+        // Aplicamos los criterios de búsqueda
         $request = request();
         if($request->has('query') && $request->has('column')){
             $col = str_replace('-','.',$request->query('column'));
             $builder->where($col,'like','%'.$request->query('query').'%');
         }
-        $builder->orderBy('id','DESC');
+
+        // Ordenar por la tabla principal para evitar conflictos
+        $mainTable = $this->_grid->getTableName();
+        $builder->orderBy($mainTable . '.id','DESC');
 
         $cols = $this->_grid->getColumns()->getKeys();
+
+        // Si hay joins, necesitamos seleccionar columnas específicas para evitar conflictos
+        if (!empty($joins)) {
+            // Agregar el ID de la tabla principal para las acciones
+            if (!in_array($mainTable . '.id', $cols)) {
+                $cols[] = $mainTable . '.id';
+            }
+        }
+
         /** @var LengthAwarePaginator $paginator */
         $this->paginator = $builder->select($cols)->paginate(15);
         $this->paginator->withQueryString();
@@ -51,7 +79,6 @@ class GridRowCollection implements Arrayable
         foreach ($this->paginator->items() as $item) {
             $this->rows[] = new GridRow($item,$this);
         }
-
     }
 
     public function toArray(): array
@@ -60,7 +87,6 @@ class GridRowCollection implements Arrayable
             return $row->toArray();
         },$this->rows);
     }
-
 
     public function __get(string $name): mixed
     {

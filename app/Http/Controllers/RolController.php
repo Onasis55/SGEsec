@@ -4,22 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Grid\Grid;
 use App\Models\Rol;
-use Illuminate\Http\Request;
 
 class RolController extends Grid
 {
     protected string $modelClass = Rol::class;
 
-    protected string $title = 'Roles de Usuarios';
+    protected string $title = 'Roles';
 
     protected string $page = 'Rol';
+    protected string $resource  = 'roles';
 
     protected function defineRules(): array
     {
         return [
-           'nombre_rol' => 'required|min:3'
+            'nombre' => 'required|string',
+            'clave' => 'required|string',
+            'descripcion' => 'required|string'
         ];
     }
 
-    protected string $resource  = 'roles';
+    protected function defaultActions()
+    {
+        $this->rows
+            ->actions
+            ->addAction(
+                'Editar',
+                route($this->resource . '.edit', [';id;']),
+                'bi-pencil-square'
+            )
+            ->addAction(
+                'Eliminar',
+                route($this->resource . '.show', [';id;']),
+                'bi-trash'
+            );
+
+        $this->toolbar
+            ->actions
+            ->addAction(
+                'Crear',
+                route($this->resource . '.create'),
+                'bi-plus-square'
+            );
+
+        // Debug: Ver acciones agregadas
+        //dd($this->rows->actions->toArray());
+    }
+
+    protected function setupActions()
+    {
+        // TODO: Implement setupActions() method.
+    }
 }
