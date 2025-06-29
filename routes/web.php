@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\MateriasController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,10 @@ Route::middleware([
         });
     Route::resource('materias', MateriasController::class);
     Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
+    Route::resource('horarios', HorarioController::class);
+    Route::resource('calificaciones',\App\Http\Controllers\CalificacionController::class);
+    Route::resource('reportes',\App\Http\Controllers\ReporteController::class);
+    Route::resource('sanciones',\App\Http\Controllers\SancionController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard')->middleware(AutenticacionRoles::class);
