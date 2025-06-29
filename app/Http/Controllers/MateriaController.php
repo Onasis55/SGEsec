@@ -7,7 +7,7 @@ use App\Models\Materia;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class MateriasController extends Grid
+class MateriaController extends Grid
 {
     protected string $modelClass = Materia::class;
 

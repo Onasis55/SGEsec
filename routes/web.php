@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\MateriasController;
+use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AutenticacionRoles;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,18 +25,21 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::resource('roles', RolController::class);
-    Route::resource('users', UserController::class);
+    Route::middleware(AdminMiddleware::class)
+        ->group(function () {
+            Route::resource('roles', RolController::class);
+            Route::resource('users', UserController::class);
 
-    Route::post('users/store-profesor', [UserController::class, 'storeProfesor'])->name('users.storeProfesor');
-    Route::post('users/store-estudiante', [UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
+            Route::post('users/store-profesor', [UserController::class, 'storeProfesor'])->name('users.storeProfesor');
+            Route::post('users/store-estudiante', [UserController::class, 'storeEstudiante'])->name('users.storeEstudiante');
+        });
 
     Route::middleware('')
         ->prefix('estudiante/')
         ->group(function (){
 
         });
-    Route::resource('materias', MateriasController::class);
+    Route::resource('materias', MateriaController::class);
     Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');

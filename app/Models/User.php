@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -24,5 +25,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Puedes agregar relaciones, mutators, etc.
+    public function rol():BelongsTo{
+        return $this->belongsTo(Rol::class, 'rol_id');
+    }
 }
