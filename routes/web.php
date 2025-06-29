@@ -37,7 +37,7 @@ Route::middleware([
 
         });
     Route::resource('materias', MateriasController::class);
-    Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
+    //Route::resource('ciclosescolares',\App\Http\Controllers\CicloEscolarController::class);
     Route::resource('horarios', HorarioController::class);
     Route::resource('calificaciones',\App\Http\Controllers\CalificacionController::class);
     Route::resource('reportes',\App\Http\Controllers\ReporteController::class);
