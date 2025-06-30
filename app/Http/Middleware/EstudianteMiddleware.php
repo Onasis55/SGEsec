@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +17,11 @@ class EstudianteMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        /** @var User $user */
         $user = Auth::user();
-        dd($user->rol);
+        if ($user->rol->clave != 'estudiante') {
+            abort(401);
+        }
         return $next($request);
     }
 }

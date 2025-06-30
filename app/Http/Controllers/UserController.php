@@ -126,8 +126,8 @@ class UserController extends UserGrid
             'apellido_paterno' => 'required|string',
             'apellido_materno' => 'required|string',
             'curp' => 'required|string|size:18|unique:users,curp,' . $id,
-            'password' => 'nullable|string|min:6',
-            'rol_id' => 'required|integer|in:2,5,4', // 2 titular, 5 sustituto, 4 estudiante
+            'rol_id' => 'required|integer|in:1,2,3,4,5', // Acepta todos los roles válidos
+            // Agrega otras reglas si es necesario
         ]);
 
         $oldRol = $user->rol_id;
@@ -160,6 +160,9 @@ class UserController extends UserGrid
 
         $user->save();
 
-        return response()->json(['message' => 'Usuario actualizado', 'user' => $user]);
+        return response()->json([
+            'message' => 'Usuario actualizado',
+            'user' => $user,
+        ]);
     }
 }

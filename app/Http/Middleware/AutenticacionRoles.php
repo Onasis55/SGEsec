@@ -25,9 +25,9 @@ class AutenticacionRoles
                 case 'admin': // admin procede a todos lados
                     return $next($request);
                     break;
-                case 'otra wea':
-                    return redirect()->route('otra.wea');
-                    default:
+                case 'estudiante':
+                    return redirect()->route('dashboard.estudiante');
+                    break;
             }
         }
 

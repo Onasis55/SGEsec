@@ -1,221 +1,166 @@
 <template>
     <app-layout>
-        <loading v-model:show="loading" :success="success" @continue="done" />
-        <div class="container mx-auto mt-4 px-10">
-            <transition appear>
-                <div v-if="showError" class="px-4 py-2 bg-red-500 text-white rounded my-4">
-                    <h5 class="text-xl font-semibold">
-                        <i class="bi bi-bug"></i>
-                        Error
-                    </h5>
-                    {{ errorMessage }}
-                </div>
-            </transition>
+        <div class="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-200">
+            <div class="max-w-lg w-full bg-white p-8 rounded shadow">
+                <h2 class="text-2xl font-semibold mb-6 text-center">Editar Usuario</h2>
 
-            <form @submit.prevent="submitForm" class="p-4 rounded bg-white shadow">
-                <div>
-                    <label>Tipo de usuario</label>
-                    <select v-model="form.tipoUsuario" @change="onTipoUsuarioChange" class="input" disabled>
-                        <option value="">Seleccione</option>
-                        <option value="estudiante">Estudiante</option>
-                        <option value="profesor">Profesor</option>
-                    </select>
+                <div class="mb-4 font-semibold text-center">
+                    Tipo de usuario: {{ tipoUsuarioTexto }}
                 </div>
 
-                <!-- Campos para Profesor -->
-                <div v-if="form.tipoUsuario === 'profesor'" class="mt-4 space-y-2">
-                    <label>Nombre</label>
-                    <input v-model="form.name" type="text" required class="input" />
+                <transition appear>
+                    <div v-if="showError" class="px-4 py-2 bg-red-500 text-white rounded mb-4">
+                        <h5 class="text-xl font-semibold flex items-center gap-2">
+                            <i class="bi bi-bug"></i>
+                            Error
+                        </h5>
+                        {{ errorMessage }}
+                    </div>
+                </transition>
 
-                    <label>Apellido Paterno</label>
-                    <input v-model="form.apellido_paterno" type="text" required class="input" />
+                <form @submit.prevent="submitForm" class="space-y-4">
+                    <div>
+                        <label class="block font-medium mb-1">Nombre</label>
+                        <input v-model="form.name" type="text" required class="input" />
+                    </div>
 
-                    <label>Apellido Materno</label>
-                    <input v-model="form.apellido_materno" type="text" required class="input" />
+                    <div>
+                        <label class="block font-medium mb-1">Apellido Paterno</label>
+                        <input v-model="form.apellido_paterno" type="text" required class="input" />
+                    </div>
 
-                    <label>CURP</label>
-                    <input v-model="form.curp" type="text" maxlength="18" required class="input" disabled />
+                    <div>
+                        <label class="block font-medium mb-1">Apellido Materno</label>
+                        <input v-model="form.apellido_materno" type="text" required class="input" />
+                    </div>
 
-                    <label>Contraseña (dejar vacío para no cambiar)</label>
-                    <input v-model="form.password" type="password" class="input" />
+                    <div>
+                        <label class="block font-medium mb-1">CURP</label>
+                        <input v-model="form.curp" type="text" maxlength="18" required class="input" />
+                    </div>
 
-                    <label class="inline-flex items-center mt-2">
-                        <input type="checkbox" v-model="form.esTitular" class="mr-2" />
-                        Profesor Titular
-                    </label>
-                </div>
+                    <div v-if="esProfesor" class="flex items-center space-x-2">
+                        <input type="checkbox" v-model="form.esTitular" id="esTitular" class="form-checkbox" />
+                        <label for="esTitular" class="select-none">Profesor Titular</label>
+                    </div>
 
-                <!-- Campos para Estudiante -->
-                <div v-if="form.tipoUsuario === 'estudiante'" class="mt-4 space-y-4">
-                    <h3 class="font-semibold">Datos del Padre o Tutor</h3>
-                    <label>Nombre</label>
-                    <input v-model="form.padre.name" type="text" required class="input" />
+                    <div class="flex justify-between mt-6">
+                        <button
+                            type="button"
+                            @click="goBack"
+                            class="btn bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded"
+                        >
+                            Regresar
+                        </button>
 
-                    <label>Apellido Paterno</label>
-                    <input v-model="form.padre.apellido_paterno" type="text" required class="input" />
-
-                    <label>Apellido Materno</label>
-                    <input v-model="form.padre.apellido_materno" type="text" required class="input" />
-
-                    <label>CURP</label>
-                    <input v-model="form.padre.curp" type="text" maxlength="18" required class="input" disabled />
-
-                    <label>Contraseña (dejar vacío para no cambiar)</label>
-                    <input v-model="form.padre.password" type="password" class="input" />
-
-                    <h3 class="font-semibold mt-4">Datos del Estudiante</h3>
-                    <label>Nombre</label>
-                    <input v-model="form.estudiante.name" type="text" required class="input" />
-
-                    <label>Apellido Paterno</label>
-                    <input v-model="form.estudiante.apellido_paterno" type="text" required class="input" />
-
-                    <label>Apellido Materno</label>
-                    <input v-model="form.estudiante.apellido_materno" type="text" required class="input" />
-
-                    <label>CURP</label>
-                    <input v-model="form.estudiante.curp" type="text" maxlength="18" required class="input" disabled />
-
-                    <label>Contraseña (dejar vacío para no cambiar)</label>
-                    <input v-model="form.estudiante.password" type="password" class="input" />
-                </div>
-
-                <div class="flex justify-end mt-6">
-                    <button type="submit" class="btn" :disabled="loading">
-                        Guardar Cambios
-                    </button>
-                </div>
-            </form>
+                        <button type="submit" class="btn" :disabled="loading">
+                            Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </app-layout>
 </template>
 
 <script>
 import axios from 'axios';
-import Loading from '@/Components/Loading.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 
 export default {
     components: {
-        Loading,
         AppLayout,
     },
     props: {
-        item: Object,
-        url: String,
-        method: String,
-        backurl: String,
+        item: {
+            type: Object,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        },
+        backurl: {
+            type: String,
+            required: true,
+        },
     },
     data() {
         return {
             form: {
-                tipoUsuario: '',
                 name: '',
                 apellido_paterno: '',
                 apellido_materno: '',
                 curp: '',
-                password: '',
                 esTitular: false,
-                padre: {
-                    name: '',
-                    apellido_paterno: '',
-                    apellido_materno: '',
-                    curp: '',
-                    password: '',
-                },
-                estudiante: {
-                    name: '',
-                    apellido_paterno: '',
-                    apellido_materno: '',
-                    curp: '',
-                    password: '',
-                },
             },
             loading: false,
-            success: false,
             showError: false,
             errorMessage: '',
         };
     },
-    mounted() {
-        this.loadForm();
-    },
-    methods: {
-        loadForm() {
-            if (this.item.rol_id === 2) {
-                this.form.tipoUsuario = 'profesor';
-                this.form.esTitular = true;
-                this.form.name = this.item.name;
-                this.form.apellido_paterno = this.item.apellido_paterno;
-                this.form.apellido_materno = this.item.apellido_materno;
-                this.form.curp = this.item.curp;
-            } else if (this.item.rol_id === 5) {
-                this.form.tipoUsuario = 'profesor';
-                this.form.esTitular = false;
-                this.form.name = this.item.name;
-                this.form.apellido_paterno = this.item.apellido_paterno;
-                this.form.apellido_materno = this.item.apellido_materno;
-                this.form.curp = this.item.curp;
-            } else if (this.item.rol_id === 4) {
-                this.form.tipoUsuario = 'estudiante';
-                this.form.estudiante.name = this.item.name;
-                this.form.estudiante.apellido_paterno = this.item.apellido_paterno;
-                this.form.estudiante.apellido_materno = this.item.apellido_materno;
-                this.form.estudiante.curp = this.item.curp;
-                // Aquí deberías cargar datos del padre si están disponibles
+    computed: {
+        esProfesor() {
+            return this.item.rol_id === 2 || this.item.rol_id === 5;
+        },
+        tipoUsuarioTexto() {
+            switch (this.item.rol_id) {
+                case 1:
+                    return 'Administrador';
+                case 2:
+                    return 'Profesor Titular';
+                case 5:
+                    return 'Profesor Sustituto';
+                case 4:
+                    return 'Estudiante';
+                case 3:
+                    return 'Tutor';
+                default:
+                    return 'Desconocido';
             }
         },
-        onTipoUsuarioChange() {
-            // No permitir cambiar tipo en edición
+    },
+    mounted() {
+        this.cargarDatos();
+    },
+    methods: {
+        goBack() {
+            Inertia.visit(this.backurl);
+        },
+        cargarDatos() {
+            this.form.name = this.item.name || '';
+            this.form.apellido_paterno = this.item.apellido_paterno || '';
+            this.form.apellido_materno = this.item.apellido_materno || '';
+            this.form.curp = this.item.curp || '';
+            this.form.esTitular = this.item.rol_id === 2; // true si titular, false si sustituto
         },
         async submitForm() {
             this.loading = true;
             this.showError = false;
             this.errorMessage = '';
             try {
-                let payload = {};
-                if (this.form.tipoUsuario === 'profesor') {
-                    payload = {
-                        name: this.form.name,
-                        apellido_paterno: this.form.apellido_paterno,
-                        apellido_materno: this.form.apellido_materno,
-                        curp: this.form.curp,
-                        password: this.form.password || undefined,
-                        rol_id: this.form.esTitular ? 2 : 5,
-                    };
-                    await axios.put(this.url, payload);
-                } else if (this.form.tipoUsuario === 'estudiante') {
-                    payload = {
-                        padre: {
-                            name: this.form.padre.name,
-                            apellido_paterno: this.form.padre.apellido_paterno,
-                            apellido_materno: this.form.padre.apellido_materno,
-                            curp: this.form.padre.curp,
-                            password: this.form.padre.password || undefined,
-                        },
-                        estudiante: {
-                            name: this.form.estudiante.name,
-                            apellido_paterno: this.form.estudiante.apellido_paterno,
-                            apellido_materno: this.form.estudiante.apellido_materno,
-                            curp: this.form.estudiante.curp,
-                            password: this.form.estudiante.password || undefined,
-                        },
-                    };
-                    await axios.put(this.url, payload);
+                const payload = {
+                    name: this.form.name,
+                    apellido_paterno: this.form.apellido_paterno,
+                    apellido_materno: this.form.apellido_materno,
+                    curp: this.form.curp,
+                    rol_id: this.item.rol_id, // Enviar siempre rol_id original
+                };
+
+                if (this.esProfesor) {
+                    payload.rol_id = this.form.esTitular ? 2 : 5;
                 }
-                this.success = true;
-                this.loading = false;
+
+                await axios.put(this.url, payload);
+
                 Inertia.visit(this.backurl);
             } catch (error) {
-                this.loading = false;
-                this.success = false;
                 this.showError = true;
                 this.errorMessage = error.response?.data?.message || error.message || 'Error desconocido';
+            } finally {
+                this.loading = false;
             }
-        },
-        done() {
-            Inertia.visit(this.backurl);
         },
     },
 };

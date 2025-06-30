@@ -17,5 +17,25 @@ class RolSeed extends Seeder
             'nombre' => 'Administrador',
             'clave' => 'admin'
         ]);
+        Rol::create(
+        [
+            'nombre' => 'Profesor Titular',
+            'clave' => 'profesortitular'
+        ]);
+        Rol::create(
+        [
+            'nombre' => 'Padre o Tutor',
+            'clave' => 'tutor'
+        ]);
+        Rol::create(
+        [
+            'nombre' => 'Estudiante',
+            'clave' => 'estudiante'
+        ]);
+        Rol::create(
+        [
+            'nombre' => 'Profesor Sustituto',
+            'clave' => 'profesorsustituto'
+        ]);
     }
 }

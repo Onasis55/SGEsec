@@ -1,72 +1,46 @@
-<!DOCTYPE html>
+@php
+    use Illuminate\Support\Facades\Auth;
+
+    $user = Auth::user();
+    $dashboardRoute = route('login'); // Por defecto a login
+
+    if ($user) {
+        $rolClave = $user->rol->clave ?? null;
+
+        switch ($rolClave) {
+            case 'admin':
+                $dashboardRoute = route('dashboard.administrador');
+                break;
+            case 'estudiante':
+                $dashboardRoute = route('dashboard.estudiante');
+                break;
+            case 'profesortutor':
+            case 'profesorsustituto':
+                $dashboardRoute = route('dashboard.profesor'); // Si tienes esta ruta
+                break;
+            default:
+                $dashboardRoute = route('dashboard'); // Ruta genérica
+                break;
+        }
+    }
+@endphp
+
+    <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Error 401 - No autorizado</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 480px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 40px 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(8px);
-        }
-        h1 {
-            font-size: 6rem;
-            margin: 0;
-            font-weight: 700;
-            letter-spacing: 8px;
-        }
-        h2 {
-            font-weight: 400;
-            margin: 20px 0 30px;
-            font-size: 1.5rem;
-        }
-        p {
-            font-size: 1rem;
-            margin-bottom: 30px;
-            color: #e0e0e0;
-        }
-        a.button {
-            display: inline-block;
-            padding: 12px 30px;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #764ba2;
-            background: #fff;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: background 0.3s ease, color 0.3s ease;
-            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4);
-        }
-        a.button:hover {
-            background: #5a3790;
-            color: #fff;
-            box-shadow: 0 6px 20px rgba(90, 55, 144, 0.7);
-        }
-    </style>
+    <title>403 - Acceso no autorizado</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<div class="container">
-    <h1>401</h1>
-    <h2>No autorizado</h2>
-    <p>No tienes permiso para acceder a esta página. Por favor, inicia sesión o contacta al administrador.</p>
-    <a href="/dashboard" class="button">Iniciar sesión</a>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="bg-white p-8 rounded shadow-md text-center max-w-md">
+    <h1 class="text-6xl font-bold text-red-600 mb-4">403</h1>
+    <h2 class="text-2xl font-semibold mb-6">Acceso no autorizado</h2>
+    <p class="mb-6">No tienes permiso para acceder a esta página.</p>
+    <a href="{{ $dashboardRoute }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded transition">
+        Ir a mi dashboard
+    </a>
 </div>
 </body>
 </html>

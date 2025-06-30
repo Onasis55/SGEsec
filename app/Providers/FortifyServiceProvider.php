@@ -13,6 +13,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Login;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -43,6 +46,35 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        // Autenticacion personalizada
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = \App\Models\User::where('cuenta', $request->cuenta)->first();
+
+            if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+                Auth::login($user);
+                return $user;
+            }
+        });
+
+        // Escuchar evento Login para redirigir según rol
+        Event::listen(Login::class, function ($event) {
+            $user = $event->user;
+            if ($user->rol->clave === 'admin') {
+                session()->put('url.intended', '/administrador/dashboard');
+            }
+            else if ($user->rol->clave === 'estudiante') {
+                session()->put('url.intended', '/estudiante/dashboard');
+            }
+            else if ($user->rol->clave === 'tutor') {
+                session()->put('url.intended', '/tutores/dashboard');
+            }
+            elseif (in_array($user->rol->clave, ['profesortitular', 'profesorsustituto'])) {
+                session()->put('url.intended', '/profesores/dashboard');
+            } else {
+            session()->put('url.intended', '/dashboard');
+            }
         });
     }
 }

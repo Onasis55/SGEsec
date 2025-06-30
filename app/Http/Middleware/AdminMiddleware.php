@@ -20,7 +20,6 @@ class AdminMiddleware
         /** @var User $user */
         $user = Auth::user();
         if ($user->rol->clave != 'admin') {
-            //dd('No tienes permiso we');
             abort(401);
         }
         return $next($request);
