@@ -28,6 +28,15 @@ class AutenticacionRoles
                 case 'estudiante':
                     return redirect()->route('dashboard.estudiante');
                     break;
+                case 'tutor':
+                    return redirect()->route('dashboard.tutor');
+                    break;
+                    case 'profesorsustituto':
+                        return redirect()->route('dashboard.profesor');
+                        break;
+                case 'profesortitular':
+                        return redirect()->route('dashboard.profesor');
+                        break;
             }
         }
 

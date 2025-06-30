@@ -11,6 +11,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AutenticacionRoles;
 use App\Http\Middleware\EstudianteMiddleware;
+use App\Http\Middleware\ProfesorMiddleware;
+use App\Http\Middleware\TutorMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,6 +55,28 @@ Route::middleware([
         return Inertia::render('DashboardEstudiante');
     })->name('dashboard.estudiante')->middleware(AutenticacionRoles::class);
     });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    TutorMiddleware::class,
+])->prefix('tutor')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('DashboardTutor');
+    })->name('dashboard.tutor')->middleware(AutenticacionRoles::class);
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    ProfesorMiddleware::class,
+])->prefix('profesor')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('DashboardProfesor');
+    })->name('dashboard.profesor')->middleware(AutenticacionRoles::class);
+});
 
 Route::resource('materias', MateriaController::class);
 Route::resource('ciclosescolares', CicloEscolarController::class);

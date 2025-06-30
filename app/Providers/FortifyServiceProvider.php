@@ -68,10 +68,10 @@ class FortifyServiceProvider extends ServiceProvider
                 session()->put('url.intended', '/estudiante/dashboard');
             }
             else if ($user->rol->clave === 'tutor') {
-                session()->put('url.intended', '/tutores/dashboard');
+                session()->put('url.intended', '/tutor/dashboard');
             }
             elseif (in_array($user->rol->clave, ['profesortitular', 'profesorsustituto'])) {
-                session()->put('url.intended', '/profesores/dashboard');
+                session()->put('url.intended', '/profesor/dashboard');
             } else {
             session()->put('url.intended', '/dashboard');
             }
