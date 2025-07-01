@@ -25,6 +25,7 @@
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-vue3": "^0.6.0",
         "bootstrap-icons": "^1.13.1",
-        "vue-multiselect": "^3.2.0"
+        "vue-multiselect": "^3.2.0",
+        "vue-router": "^4.5.1"
     }
 }

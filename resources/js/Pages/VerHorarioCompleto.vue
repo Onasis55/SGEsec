@@ -3,6 +3,9 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import AppLayout from "@/Layouts/AppLayout.vue";
 
+function regresar() {
+    window.location.href = '/estudiante/dashboard';
+}
 interface HorarioItem {
     id: number;
     dia_semana: number; // 0=lunes ... 4=viernes
@@ -66,6 +69,14 @@ onMounted(async () => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="fixed bottom-4 right-4">
+            <button
+                @click="regresar"
+                class="px-10 py-5 text-white bg-emerald-950 rounded-md hover:bg-emerald-800 transition duration-300"
+            >
+                regresar
+            </button>
         </div>
     </app-layout>
 </template>

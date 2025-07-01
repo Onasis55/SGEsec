@@ -93,7 +93,14 @@ class UserController extends UserGrid
             'grupo_id' => $grupo->id,
         ]);
 
-        return response()->json(['message' => 'Estudiante y padre creados, estudiante asignado a grupo.', 'padre' => $padre, 'estudiante' => $estudiante]);
+        // Asignar el tutor (padre) al estudiante en la tabla pivote usando la relación estudiantesTutorados
+        $padre->estudiantesTutorados()->attach($estudiante->id);
+
+        return response()->json([
+            'message' => 'Estudiante y padre creados, estudiante asignado a grupo y tutor asignado.',
+            'padre' => $padre,
+            'estudiante' => $estudiante,
+        ]);
     }
 
     private function generarHomoclaveUnica()

@@ -34,4 +34,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Estudiante::class, 'id_usuario');
     }
+    public function estudiantesTutorados()
+    {
+        return $this->belongsToMany(Estudiante::class, 'estudiante_tutor', 'user_id', 'estudiante_id');
+    }
 }

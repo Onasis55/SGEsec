@@ -10,7 +10,7 @@
                 </button>
 
                 <button
-                    @click="goTo('/estudiante/horario')"
+                    @click="goTo('/estudiante/ver-horario-completo')"
                     class="bg-teal-950 hover:bg-emerald-900 text-white font-bold py-8 px-6 rounded-lg text-2xl shadow-lg transition duration-300"
                 >
                     Horario

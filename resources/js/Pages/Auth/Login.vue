@@ -8,6 +8,10 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
+function recuperar() {
+    window.location.href = '/recuperacion';
+}
+
 defineProps({
     canResetPassword: Boolean,
     status: String,
@@ -74,15 +78,8 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-300">Recuerdame</span>
-                </label>
-            </div>
-
             <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-400 hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#79BA7B]">
+                <Link v-if="canResetPassword" @click="recuperar" :href="route('password.recovery_request')" class="underline text-sm text-gray-400 hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#79BA7B]">
                     Olvidaste tu contraseña?
                 </Link>
 

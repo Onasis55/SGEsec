@@ -113,7 +113,6 @@
                             <label class="block font-medium mb-1">CURP</label>
                             <input v-model.trim="form.estudiante.curp" type="text" maxlength="18" minlength="18" required class="input" />
                         </div>
-
                         <div>
                             <label class="block font-medium mb-1">Contraseña</label>
                             <input v-model="form.estudiante.password" type="password" minlength="6" class="input" />

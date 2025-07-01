@@ -128,4 +128,35 @@ class HorarioController extends Controller
 
         return response()->json(['message' => 'Horario completo guardado correctamente']);
     }
+
+    public function verHorarioAlumnoTutor(Request $request)
+    {
+        $user = $request->user();
+
+        $estudiantes = $user->estudiantesTutorados()->with('grupo.horarioItems.materia')->get();
+
+        if ($estudiantes->isEmpty()) {
+            return response()->json(['error' => 'No se encontraron estudiantes asignados'], 404);
+        }
+
+        $estudiante = $estudiantes->first();
+
+        if (!$estudiante->grupo) {
+            return response()->json(['error' => 'El estudiante no tiene grupo asignado'], 404);
+        }
+
+        $horarioItems = $estudiante->grupo->horarioItems;
+
+        if ($horarioItems->isEmpty()) {
+            return response()->json(['error' => 'No hay un horario asignado para el estudiante'], 404);
+        }
+
+        return response()->json([
+            'estudiante' => [
+                'id' => $estudiante->id,
+                'nombre' => $estudiante->user->name ?? 'Estudiante',
+            ],
+            'horarioItems' => $horarioItems,
+        ]);
+    }
 }

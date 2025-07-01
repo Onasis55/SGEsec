@@ -3,6 +3,11 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import {ref, shallowRef} from "vue";
 import axios from 'axios';
+import { Inertia } from '@inertiajs/inertia';
+
+function regresar() {
+    window.location.href = '/administrador/dashboard';
+}
 
 interface Props {
     niveles: number[],
@@ -84,7 +89,7 @@ const guardarHorarioCompleto = async () => {
                     </select>
                 </div>
                 <div class="flex items-end">
-                    <button @click.prevent="cargarMaterias" class="px-4 py-2 rounded bg-emerald-950 text-white">
+                    <button @click.prevent="cargarMaterias" class="px-4 py-2 text-white bg-emerald-950 rounded-md hover:bg-emerald-800 transition duration-300">
                         Cargar Materias
                     </button>
                 </div>
@@ -99,7 +104,7 @@ const guardarHorarioCompleto = async () => {
                     </select>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <button @click.prevent="guardarHorarioCompleto" class="px-4 py-2 rounded bg-blue-600 text-white">
+                    <button @click.prevent="guardarHorarioCompleto" class="px-4 py-2 text-white bg-emerald-950 rounded-md hover:bg-emerald-800 transition duration-300">
                         Guardar Horario Completo
                     </button>
                     <span class="text-green-600 font-semibold" v-if="mensaje">{{ mensaje }}</span>
@@ -120,6 +125,14 @@ const guardarHorarioCompleto = async () => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="fixed bottom-4 right-4">
+            <button
+                @click="regresar"
+                class="px-10 py-5 text-white bg-emerald-950 rounded-md hover:bg-emerald-800 transition duration-300"
+            >
+                regresar
+            </button>
         </div>
     </app-layout>
 </template>
