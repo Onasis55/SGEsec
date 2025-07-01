@@ -7,13 +7,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Estudiante extends Model
 {
-
     protected $fillable = [
         'inasistencias',
-        'id_usuario'
+        'id_usuario',
+        'grupo_id',
     ];
 
-    public function user():BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class, 'id_usuario');
+    }
+
+    public function grupo()
+    {
+        return $this->belongsTo(Grupo::class, 'grupo_id');
     }
 }

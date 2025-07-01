@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CicloEscolarController;
+use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\HorarioControllerOld;
 use App\Http\Controllers\MateriaController;
@@ -56,6 +58,18 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('DashboardEstudiante');
     })->name('dashboard.estudiante')->middleware(AutenticacionRoles::class);
+    Route::get('/horario', [EstudianteController::class, 'VerHorario'])
+        ->name('estudiante.horario');
+
+    Route::get('/ver-horario', function () {
+        return Inertia::render('VerHorario');
+    })->name('estudiante.ver-horario');
+
+    Route::get('/horario-completo', [EstudianteController::class, 'verHorarioCompleto'])->name('estudiante.horarioCompleto');
+
+    Route::get('/ver-horario-completo', function () {
+        return Inertia::render('VerHorarioCompleto');
+    })->name('estudiante.verHorarioCompleto');
 });
 
 Route::middleware([
@@ -86,13 +100,16 @@ Route::resource('calificaciones', CalificacionController::class);
 Route::resource('reportes', ReporteController::class);
 Route::resource('sanciones', SancionController::class);
 Route::resource('profesores', ProfesorController::class);
-Route::resource('estudiantes', \App\Http\Controllers\EstudianteController::class);
+Route::resource('estudiantes', EstudianteController::class);
 
+Route::resource('grupos', GrupoController::class);
 
 Route::middleware(['auth:sanctum'])
     ->group(function () {
-        Route::get('/horario/nuevo',[HorarioController::class,'nuevo']);
+        Route::get('/horario/nuevo', [HorarioController::class, 'nuevo'])->name('horario.nuevo');
         Route::post('/horario/cargar/materias/{nivel}',[HorarioController::class,'cargarMaterias']);
+        Route::post('/horario/store', [HorarioController::class, 'store'])->name('horario.store');
+        Route::post('/horario/guardar-completo', [HorarioController::class, 'guardarHorarioCompleto'])->name('horario.guardarCompleto');
     });
 
 Route::get('/dashboard', function () {

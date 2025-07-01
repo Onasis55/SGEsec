@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('grupos', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('horario_items', function (Blueprint $table) {
+            $table->unsignedTinyInteger('dia_semana')->after('grupo_id'); // 0=lunes ... 4=viernes
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('grupos');
+        Schema::table('horario_items', function (Blueprint $table) {
+            $table->dropColumn('dia_semana');
+        });
     }
 };

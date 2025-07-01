@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Grid\UserGrid;
+use App\Models\Grupo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
@@ -42,7 +43,6 @@ class UserController extends UserGrid
 
     public function storeEstudiante(Request $request)
     {
-
         $data = $request->validate([
             'padre.nombre' => 'required|string',
             'padre.apellido_paterno' => 'required|string',
@@ -69,7 +69,7 @@ class UserController extends UserGrid
             'apellido_materno' => $data['padre']['apellido_materno'],
             'curp' => $data['padre']['curp'],
             'password' => bcrypt($data['padre']['password'] ?? Str::random(8)),
-            'rol_id' => 3, // Asumiendo rol padre/tutor
+            'rol_id' => 3,
         ]);
 
         $usuarioEstudiante = User::create([
@@ -79,12 +79,21 @@ class UserController extends UserGrid
             'apellido_materno' => $data['estudiante']['apellido_materno'],
             'curp' => $data['estudiante']['curp'],
             'password' => bcrypt($data['estudiante']['password'] ?? Str::random(8)),
-            'rol_id' => 4, // Asumiendo rol estudiante
+            'rol_id' => 4,
         ]);
 
-        $estudiante = $usuarioEstudiante->estudiante()->create([]);
+        $grupo = Grupo::inRandomOrder()->first();
+        if (!$grupo) {
+            $usuarioEstudiante->delete();
+            $padre->delete();
+            return response()->json(['error' => 'No existen grupos disponibles para asignar al estudiante.'], 400);
+        }
 
-        return response()->json(['message' => 'Estudiante y padre creados', 'padre' => $padre, 'estudiante' => $estudiante]);
+        $estudiante = $usuarioEstudiante->estudiante()->create([
+            'grupo_id' => $grupo->id,
+        ]);
+
+        return response()->json(['message' => 'Estudiante y padre creados, estudiante asignado a grupo.', 'padre' => $padre, 'estudiante' => $estudiante]);
     }
 
     private function generarHomoclaveUnica()

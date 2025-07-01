@@ -41,4 +41,39 @@ class EstudianteController extends Grid
         });
     }
     protected function defaultActions(){}
+
+    public function verHorario(Request $request)
+    {
+        $user = $request->user();
+
+        $estudiante = $user->estudiante()->with('grupo.horario.materia')->first();
+
+        if (!$estudiante || !$estudiante->grupo) {
+            return response()->json(['error' => 'No tienes un grupo asignado'], 404);
+        }
+
+        $horario = $estudiante->grupo->horario;
+
+        return response()->json([
+            'horario' => $horario,
+            'materia' => $horario ? $horario->materia : null,
+        ]);
+    }
+
+    public function verHorarioCompleto(Request $request)
+    {
+        $user = $request->user();
+
+        $estudiante = $user->estudiante()->with('grupo.horarioItems.materia')->first();
+
+        if (!$estudiante || !$estudiante->grupo) {
+            return response()->json(['error' => 'No tienes un grupo asignado'], 404);
+        }
+
+        $horarioItems = $estudiante->grupo->horarioItems;
+
+        return response()->json([
+            'horarioItems' => $horarioItems,
+        ]);
+    }
 }
