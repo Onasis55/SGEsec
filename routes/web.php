@@ -4,6 +4,7 @@ use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CicloEscolarController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\SancionController;
@@ -54,7 +55,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('DashboardEstudiante');
     })->name('dashboard.estudiante')->middleware(AutenticacionRoles::class);
-    });
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -84,6 +85,7 @@ Route::resource('horarios', HorarioController::class);
 Route::resource('calificaciones', CalificacionController::class);
 Route::resource('reportes', ReporteController::class);
 Route::resource('sanciones', SancionController::class);
+Route::resource('profesores', ProfesorController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

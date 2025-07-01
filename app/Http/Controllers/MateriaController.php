@@ -22,17 +22,10 @@ class MateriaController extends Grid
     {
         return [
             'nombre' => 'required|string',
-            'nivel' => 'required|integer|between:1,3'
+            'nivel' => 'required|integer|between:1,3',
+            'clave' => 'required|string',
+            'descripcion' => 'required|string',
         ];
     }
 
-    protected function defaultActions()
-    {
-        // TODO: Implement defaultActions() method.
-    }
-
-    protected function setupActions()
-    {
-        // TODO: Implement setupActions() method.
-    }
 }

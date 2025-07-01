@@ -8,6 +8,8 @@ class Materia extends Model
 {
     protected $fillable = [
         'nombre',
-        'nivel'
+        'nivel',
+        'clave',
+        'descripcion'
     ];
 }

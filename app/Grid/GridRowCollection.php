@@ -15,6 +15,7 @@ class GridRowCollection implements Arrayable
 
     protected GridActionCollection $actions;
 
+
     protected LengthAwarePaginator $paginator;
 
     private array $rows = [];
@@ -28,11 +29,21 @@ class GridRowCollection implements Arrayable
         $this->init();
     }
 
+
+
     private function init(){
         /** @var Model $model */
-        $model = new ($this->_grid->getModelClass());
+        $model = $this->_grid->getModel();
+
+        $calle = $this->_grid->getWhereClauses();
+
+        if(!$model) throw new \Exception('Model not found');
 
         $builder = $model->newQuery();
+
+        if(is_callable($calle)){
+            $calle($builder);
+        }
 
         // Aplicar joins si existen
         $joins = $this->_grid->getJoins();
@@ -79,6 +90,7 @@ class GridRowCollection implements Arrayable
         foreach ($this->paginator->items() as $item) {
             $this->rows[] = new GridRow($item,$this);
         }
+
     }
 
     public function toArray(): array
