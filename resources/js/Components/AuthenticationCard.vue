@@ -1,10 +1,10 @@
 <template>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#1F3D2F]">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-emerald-950">
         <div>
             <slot name="logo" />
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 border-[3px] border-[#79BA7B] bg-[#2D553E] shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 border-[3px] border-[#79BA7B] bg-emerald-800 shadow-md overflow-hidden sm:rounded-lg">
             <slot />
         </div>
     </div>

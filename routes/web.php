@@ -157,7 +157,7 @@ Route::middleware(['auth:sanctum'])
     });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    Route::redirect('/dashboard', '/login');
 })->name('dashboard')->middleware(AutenticacionRoles::class);
 
 Route::get('/recuperacion', function () {
