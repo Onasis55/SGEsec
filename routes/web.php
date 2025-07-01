@@ -84,6 +84,7 @@ Route::resource('horarios', HorarioController::class);
 Route::resource('calificaciones', CalificacionController::class);
 Route::resource('reportes', ReporteController::class);
 Route::resource('sanciones', SancionController::class);
+Route::resource('estudiantes', \App\Http\Controllers\EstudianteController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
