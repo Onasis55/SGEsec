@@ -3,6 +3,7 @@
 use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CicloEscolarController;
 use App\Http\Controllers\HorarioController;
+use App\Http\Controllers\HorarioControllerOld;
 use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\ProfesorController;
 use App\Http\Controllers\ReporteController;
@@ -81,12 +82,18 @@ Route::middleware([
 
 Route::resource('materias', MateriaController::class);
 Route::resource('ciclosescolares', CicloEscolarController::class);
-Route::resource('horarios', HorarioController::class);
 Route::resource('calificaciones', CalificacionController::class);
 Route::resource('reportes', ReporteController::class);
 Route::resource('sanciones', SancionController::class);
 Route::resource('profesores', ProfesorController::class);
 Route::resource('estudiantes', \App\Http\Controllers\EstudianteController::class);
+
+
+Route::middleware(['auth:sanctum'])
+    ->group(function () {
+        Route::get('/horario/nuevo',[HorarioController::class,'nuevo']);
+        Route::post('/horario/cargar/materias/{nivel}',[HorarioController::class,'cargarMaterias']);
+    });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
