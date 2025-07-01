@@ -42,6 +42,7 @@ class UserController extends UserGrid
 
     public function storeEstudiante(Request $request)
     {
+
         $data = $request->validate([
             'padre.nombre' => 'required|string',
             'padre.apellido_paterno' => 'required|string',
@@ -71,7 +72,7 @@ class UserController extends UserGrid
             'rol_id' => 3, // Asumiendo rol padre/tutor
         ]);
 
-        $estudiante = User::create([
+        $usuarioEstudiante = User::create([
             'cuenta' => $cuentaEstudiante,
             'name' => $data['estudiante']['nombre'],
             'apellido_paterno' => $data['estudiante']['apellido_paterno'],
@@ -80,6 +81,8 @@ class UserController extends UserGrid
             'password' => bcrypt($data['estudiante']['password'] ?? Str::random(8)),
             'rol_id' => 4, // Asumiendo rol estudiante
         ]);
+
+        $estudiante = $usuarioEstudiante->estudiante()->create([]);
 
         return response()->json(['message' => 'Estudiante y padre creados', 'padre' => $padre, 'estudiante' => $estudiante]);
     }

@@ -41,9 +41,7 @@ class GridRowCollection implements Arrayable
 
         $builder = $model->newQuery();
 
-        if(is_callable($calle)){
-            $calle($builder);
-        }
+
 
         // Aplicar joins si existen
         $joins = $this->_grid->getJoins();
@@ -60,6 +58,10 @@ class GridRowCollection implements Arrayable
                     $builder->join($join['table'], $join['first'], $join['operator'], $join['second']);
                     break;
             }
+        }
+
+        if(is_callable($calle)){
+            $calle($builder);
         }
 
         // Aplicamos los criterios de búsqueda

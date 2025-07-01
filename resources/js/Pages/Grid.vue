@@ -80,7 +80,7 @@ function buscar(){
     <app-layout>
         <div class="container mx-auto">
             <div class="flex justify-between items-center">
-                <h1 class="py-2 text-2xl text-blue-800 font-semibold my-4">{{ title }}</h1>
+                <h1 class="py-2 text-2xl text-emerald-950 font-semibold my-4">{{ title }}</h1>
                 <div class="w-[30rem] flex gap-4">
                     <div class="flex items-center rounded shadow">
                         <select name="columna"
@@ -98,7 +98,7 @@ function buscar(){
                     </div>
                     <button
                         @click.prevent="buscar"
-                        class="px-4 py-2 whitespace-nowrap bg-blue-800 rounded text-white">
+                        class="px-4 py-2 whitespace-nowrap bg-emerald-950 rounded text-white">
                         <i class="bi bi-search"></i>
                         Buscar
                     </button>
@@ -141,7 +141,7 @@ function buscar(){
             <div class="flex">
                 <ul class="flex mt-4 rounded shadow overflow-hidden">
                     <li v-for="link of pagination.links">
-                        <Link :class="['px-4 py-2 border-b-4 bg-white block',link.active ? 'border-blue-800' : '']"
+                        <Link :class="['px-4 py-2 border-b-4 bg-white block',link.active ? 'border-emerald-950' : '']"
                               :href="link.url || '#'"
                               v-html="link.label">
                         </Link>

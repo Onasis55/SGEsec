@@ -46,8 +46,8 @@ abstract class Grid extends Controller
         $this->_model = (new $this->modelClass);
         $this->_table = $this->_model->getTable();
 
-
         $this->mounted();
+
 
         if (!empty($this->visibleColumns)) {
             $columns = $this->visibleColumns;
@@ -61,11 +61,16 @@ abstract class Grid extends Controller
             $columns = array_merge($columns, $this->joinColumns);
         }
 
+
+
         $this->columns = new GridColumnCollection($columns, $this);
+
+
         $this->rows = new GridRowCollection(
             intval(request('page', 1)),
             $this
         );
+
 
         $this->toolbar = new GridToolbar();
         $this->defaultActions();

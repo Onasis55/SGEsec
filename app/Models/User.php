@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -27,5 +28,10 @@ class User extends Authenticatable
 
     public function rol():BelongsTo{
         return $this->belongsTo(Rol::class, 'rol_id');
+    }
+
+    public function estudiante():HasOne
+    {
+        return $this->hasOne(Estudiante::class, 'id_usuario');
     }
 }
