@@ -13,7 +13,7 @@ class ReporteController extends Grid
 
     protected string $title = 'Reportes';
 
-    protected string $page = 'Reportes';
+    protected string $page = 'TipoReportes';
 
     protected string $resource  = 'reportes';
 
@@ -28,7 +28,8 @@ class ReporteController extends Grid
     protected function defineRules(): array
     {
         return [
-            'tipo' => 'required|string'
+            'tipo' => 'required|string',
+            'descripcion' => 'required|string',
         ];
     }
 }
