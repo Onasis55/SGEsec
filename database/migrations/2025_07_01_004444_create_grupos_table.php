@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('unidads', function (Blueprint $table) {
+        Schema::create('grupos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->foreignId('materia_id')->constrained('materias');
-            $table->unsignedBigInteger('ciclo_escolar_id');
-            $table->foreign('ciclo_escolar_id')->references('id')->on('ciclo_escolars');
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('unidads');
+        Schema::dropIfExists('grupos');
     }
 };

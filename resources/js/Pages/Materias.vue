@@ -5,7 +5,7 @@ import FormLayout from "@/Layouts/FormLayout.vue";
 
 <template>
     <form-layout>
-        <div class="grid grid-cols-4 form">
+        <div class="grid grid-cols-4 form gap-4">
             <div class="">
                 <label for="nivel">
                     Nivel de la materia
@@ -18,7 +18,18 @@ import FormLayout from "@/Layouts/FormLayout.vue";
                 </label>
                 <input type="text" id="nombre" name="nombre">
             </div>
-
+            <div class="">
+                <label for="clave">
+                    Clave de la materia
+                </label>
+                <input type="text" id="clave" name="clave">
+            </div>
+            <div class="">
+                <label for="descripcion">
+                    Descripcion de la materia
+                </label>
+                <input type="text" id="descripcion" name="descripcion">
+            </div>
         </div>
     </form-layout>
 </template>

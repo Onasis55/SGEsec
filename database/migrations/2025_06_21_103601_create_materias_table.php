@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('clave')->unique();
             $table->text('descripcion')->nullable();
             $table->integer('nivel');
-            $table->unsignedBigInteger('ciclo_escolar_id');
-            $table->foreign('ciclo_escolar_id')->references('id')->on('ciclo_escolars');
             $table->timestamps();
         });
     }

@@ -2,17 +2,20 @@
 
 namespace App\Grid;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-abstract class Grid extends \App\Http\Controllers\Controller
+abstract class Grid extends Controller
 {
     protected string $modelClass;
     protected string $title;
     protected string $resource;
     private GridToolbar $toolbar;
+
+    private mixed $whereClause = null;
 
     protected string $page;
 
@@ -40,8 +43,9 @@ abstract class Grid extends \App\Http\Controllers\Controller
     {
         $conn = DB::connection();
         $schemaBuilder = $conn->getSchemaBuilder();
-        $this->_model = new $this->modelClass;
+        $this->_model = (new $this->modelClass);
         $this->_table = $this->_model->getTable();
+
 
         $this->mounted();
 
@@ -197,6 +201,10 @@ abstract class Grid extends \App\Http\Controllers\Controller
         ], $this->getFormExtraProps()));
     }
 
+    protected function setWhereClause(callable $calle){
+        $this->whereClause = $calle;
+    }
+
     public function store(Request $request)
     {
         $rules = $this->defineRules();
@@ -301,6 +309,11 @@ abstract class Grid extends \App\Http\Controllers\Controller
     public function getColumns(): GridColumnCollection
     {
         return $this->columns;
+    }
+
+    public function getWhereClauses(): mixed
+    {
+        return $this->whereClause;
     }
 
     public function __get(string $name)
